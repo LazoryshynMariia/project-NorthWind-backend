@@ -1,0 +1,36 @@
+{
+  "name": "project-northwind-backend",
+  "version": "1.0.0",
+  "description": "Backend API for NorthWind travel platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LazoryshynMariia/project-NorthWind-backend.git"
+  },
+  "keywords": [],
+  "author": "Mariia Lazoryshyn <ledimoon21@gmail.com>",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/LazoryshynMariia/project-NorthWind-backend/issues"
+  },
+  "homepage": "https://github.com/LazoryshynMariia/project-NorthWind-backend#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "celebrate": "^15.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "http-errors": "^2.0.1",
+    "mongoose": "^9.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
