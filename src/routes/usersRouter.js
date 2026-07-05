@@ -6,10 +6,6 @@ import {
 
 const usersRouter = Router();
 
-usersRouter.get("/test", (req, res) => {
-  res.json({ message: "users router test works" });
-});
-
 usersRouter.get("/travellers/top", getTopTravellers);
 usersRouter.get("/travellers", getTravellers);
 
