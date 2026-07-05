@@ -6,7 +6,7 @@ import helmet from 'helmet';
 
 import { errors } from 'celebrate';
 
-// import { connectMongoDB } from './db/connectToMongoDB.js';
+import { connectMongoDB } from './db/connectToMongoDB.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
@@ -32,7 +32,7 @@ app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
 
-// await connectMongoDB();
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
