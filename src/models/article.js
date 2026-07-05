@@ -40,4 +40,4 @@ const articleSchema = new Schema(
   },
 );
 
-export const ArticleModel = model("Article", articleSchema);
+export const Article = model("Article", articleSchema);
