@@ -32,7 +32,10 @@ const articleSchema = new Schema(
       required: true,
       default: 0,
     },
-    date: { type: Date, required: true, },
+    date: {
+      type: Date,
+      required: true,
+    },
   },
   {
     timestamps: false,
