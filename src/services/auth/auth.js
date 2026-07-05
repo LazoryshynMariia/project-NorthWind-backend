@@ -56,3 +56,41 @@ export const login = async ({ email, password }) => {
     },
   };
 };
+
+export const refreshSession = async (refreshToken) => {
+  if (!refreshToken) {
+    throw createHttpError(401, 'Refresh token is missing');
+  }
+
+  const payload = jwt.verify(refreshToken, process.env.JWT_SECRET);
+
+  const user = await UserModel.findById(payload.id);
+
+  if (!user || user.refreshToken !== refreshToken) {
+    throw createHttpError(401, 'Invalid refresh token');
+  }
+
+  const newAccessToken = jwt.sign(
+    { id: user.id },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
+    },
+  );
+
+  const newRefreshToken = jwt.sign(
+    { id: user.id },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+    },
+  );
+
+  user.refreshToken = newRefreshToken;
+  await user.save();
+
+  return {
+    accessToken: newAccessToken,
+    refreshToken: newRefreshToken,
+  };
+};

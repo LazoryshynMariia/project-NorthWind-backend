@@ -17,6 +17,10 @@ export const authenticate = async (req, res, next) => {
       throw createHttpError(401, 'Invalid authorization header');
     }
 
+    if (!process.env.JWT_SECRET) {
+      throw createHttpError(500, 'JWT_SECRET is not configured');
+    }
+
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await UserModel.findById(payload.id);
@@ -29,6 +33,6 @@ export const authenticate = async (req, res, next) => {
 
     next();
   } catch (error) {
-    next(createHttpError(401, 'Not authorized'));
+    next(error);
   }
 };
