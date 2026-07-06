@@ -1,8 +1,8 @@
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import createHttpError from 'http-errors';
 
 import { UserModel } from '../../models/user.js';
+import { comparePasswords } from '../../utils/comparePasswords.js';
 
 export const login = async ({ email, password }) => {
   const user = await UserModel.findOne({
@@ -13,7 +13,10 @@ export const login = async ({ email, password }) => {
     throw createHttpError(401, 'Email or password is incorrect');
   }
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await comparePasswords(
+    password,
+    user.password,
+  );
 
   if (!isPasswordValid) {
     throw createHttpError(401, 'Email or password is incorrect');
@@ -71,7 +74,9 @@ export const refreshSession = async (refreshToken) => {
   }
 
   const newAccessToken = jwt.sign(
-    { id: user.id },
+    {
+      id: user.id,
+    },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
@@ -79,7 +84,9 @@ export const refreshSession = async (refreshToken) => {
   );
 
   const newRefreshToken = jwt.sign(
-    { id: user.id },
+    {
+      id: user.id,
+    },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
