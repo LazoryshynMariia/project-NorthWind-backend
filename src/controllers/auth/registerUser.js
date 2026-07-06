@@ -1,5 +1,6 @@
 import createHttpError from "http-errors";
-import { UserModel } from "../models/user.js";
+import { UserModel } from "../../models/user.js";
+import { hashPassword } from "../../utils/hashPassword.js";
 
 export const registerUser = async (req, res) => {
   const { email, password } = req.body;
@@ -8,11 +9,11 @@ export const registerUser = async (req, res) => {
     throw createHttpError(409, "Email in use");
   }
 
-  //   const hashedPassword = await ;
+  const hashedPassword = await hashPassword(password);
 
   const newUser = await UserModel.create({
-    email,
-    // password: hashedPassword
+    email: email.toLowerCase(),
+    password: hashedPassword,
   });
 
   res.status(201).json(newUser);
