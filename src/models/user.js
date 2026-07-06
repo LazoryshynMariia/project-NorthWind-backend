@@ -5,6 +5,26 @@ const userSchema = new Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
+      maxlength: 32,
+    },
+
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+
+    password: {
+      type: String,
+      required: true,
+    },
+
+    refreshToken: {
+      type: String,
+      default: null,
     },
 
     avatarUrl: {
@@ -23,17 +43,6 @@ const userSchema = new Schema(
         ref: "articles",
       },
     ],
-
-    password: {
-      type: String,
-      required: true,
-    },
-
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
   },
   {
     timestamps: true,
