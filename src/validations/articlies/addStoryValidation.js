@@ -12,4 +12,3 @@ export const createStorySchema = {
     article: Joi.string().min(12).max(3000).required(),
   }),
 };
-

@@ -3,13 +3,10 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
-
 import { errors } from "celebrate";
-
 import { connectMongoDB } from "./db/connectToMongoDB.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-
 import authRouter from "./routes/authRouter.js";
 import categoriesRouter from "./routes/categoriesRouter.js";
 import storiesRouter from "./routes/storiesRouter.js";

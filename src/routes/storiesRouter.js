@@ -8,8 +8,8 @@ const storiesRouter = Router();
 
 storiesRouter.post(
   "",
-    celebrate(createStorySchema, { abortEarly: false }),
-   upload.single("img"),
+  celebrate(createStorySchema, { abortEarly: false }),
+  upload.single("img"),
   addStory,
 );
 
