@@ -30,8 +30,10 @@ app.use("/api/categiries", categoriesRouter);
 app.use("/api/saved-stories", savedStoriesRouter);
 app.use("/api/stories", storiesRouter);
 
-app.use(notFoundHandler);
 app.use(errors());
+
+app.use(notFoundHandler);
+
 app.use(errorHandler);
 
 await connectMongoDB();
