@@ -21,7 +21,13 @@ export const authenticate = async (req, res, next) => {
       throw createHttpError(500, 'JWT_SECRET is not configured');
     }
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    let payload;
+
+    try {
+      payload = jwt.verify(token, process.env.JWT_SECRET);
+    } catch {
+      throw createHttpError(401, 'Invalid or expired token');
+    }
 
     const user = await UserModel.findById(payload.id);
 

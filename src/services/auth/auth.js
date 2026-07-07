@@ -46,8 +46,7 @@ export const login = async ({ email, password }) => {
     },
   );
 
-  user.refreshToken = refreshToken;
-  await user.save();
+  await UserModel.findByIdAndUpdate(user.id, { refreshToken });
 
   return {
     accessToken,
@@ -65,7 +64,17 @@ export const refreshSession = async (refreshToken) => {
     throw createHttpError(401, 'Refresh token is missing');
   }
 
-  const payload = jwt.verify(refreshToken, process.env.JWT_SECRET);
+  if (!process.env.JWT_SECRET) {
+    throw createHttpError(500, 'JWT_SECRET is not configured');
+  }
+
+  let payload;
+
+  try {
+    payload = jwt.verify(refreshToken, process.env.JWT_SECRET);
+  } catch {
+    throw createHttpError(401, 'Invalid refresh token');
+  }
 
   const user = await UserModel.findById(payload.id);
 
@@ -93,8 +102,9 @@ export const refreshSession = async (refreshToken) => {
     },
   );
 
-  user.refreshToken = newRefreshToken;
-  await user.save();
+  await UserModel.findByIdAndUpdate(user.id, {
+    refreshToken: newRefreshToken,
+  });
 
   return {
     accessToken: newAccessToken,
