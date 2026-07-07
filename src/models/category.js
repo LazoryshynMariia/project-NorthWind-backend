@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
 
-const categirySchema = new Schema({});
+const categorySchema = new Schema();
 
-export const CategoryModel = model('category', categirySchema);
+export const CategoryModel = model("Category", categorySchema);
