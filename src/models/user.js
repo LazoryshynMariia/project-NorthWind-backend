@@ -8,6 +8,7 @@ const userSchema = new Schema(
       trim: true,
       maxlength: 32,
     },
+
     email: {
       type: String,
       required: true,
@@ -15,14 +16,33 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
+
     password: {
       type: String,
       required: true,
     },
+
     refreshToken: {
       type: String,
       default: null,
     },
+
+    avatarUrl: {
+      type: String,
+      default: null,
+    },
+
+    articlesAmount: {
+      type: Number,
+      default: 0,
+    },
+
+    savedArticles: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "articles",
+      },
+    ],
   },
   {
     timestamps: true,
@@ -30,4 +50,4 @@ const userSchema = new Schema(
   },
 );
 
-export const UserModel = model("User", userSchema);
+export const UserModel = model("user", userSchema);
