@@ -1,1 +1,5 @@
-export * as savedStoriesControllers from "./savedStories/index.js";
+import { registerUser } from "./auth/registerUser.js";
+
+export const auth = {
+  registerUser,
+};
