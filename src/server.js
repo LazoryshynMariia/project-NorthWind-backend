@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
-app.use("/api/categiries", categoriesRouter);
+app.use("/api/categories", categoriesRouter);
 app.use("/api/stories", storiesRouter);
 
 app.use(notFoundHandler);
