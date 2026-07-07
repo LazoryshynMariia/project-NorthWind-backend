@@ -12,6 +12,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 
 import authRouter from "./routes/authRouter.js";
 import categoriesRouter from "./routes/categoriesRouter.js";
+import savedStoriesRouter from "./routes/savedStoriesRouter.js";
 import storiesRouter from "./routes/storiesRouter.js";
 import usersRouter from "./routes/usersRouter.js";
 
@@ -28,8 +29,10 @@ app.use("/api/users", usersRouter);
 app.use("/api/categiries", categoriesRouter);
 app.use("/api/stories", storiesRouter);
 
-app.use(notFoundHandler);
 app.use(errors());
+
+app.use(notFoundHandler);
+
 app.use(errorHandler);
 
 await connectMongoDB();
