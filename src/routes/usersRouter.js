@@ -33,4 +33,11 @@ usersRouter.get(
   checkSavedStoryController,
 );
 
+usersRouter.patch(
+  "/me/personal",
+  authenticate,
+  celebrate(updatePersonalDataSchema),
+  ctrl.updatePersonalData,
+);
+
 export default usersRouter;
