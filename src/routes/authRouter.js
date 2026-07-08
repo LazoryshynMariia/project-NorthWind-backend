@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { auth as ctrl } from "../controllers/index.js";
 import { celebrate } from "celebrate";
-import { registerUserSchema } from "../validations/authValidation.js";
+import { registerUserSchema } from "../validations/auth/registerValidation.js";
 
 const authRouter = Router();
 
