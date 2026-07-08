@@ -1,5 +1,6 @@
 import { Article } from "../../models/article.js";
 import createHttpError from "http-errors";
+import { saveStoryToCloudinary } from "../../utils/index.js";
 
 export const addStory = async (req, res) => {
   const { file, user } = req;
@@ -7,14 +8,16 @@ export const addStory = async (req, res) => {
     throw createHttpError(400, "No file");
   }
 
-  //const result = await saveFileToCloudinary(file.buffer, user._id);
-
   const article = await Article.create({
     ...req.body,
-    ownerId: "6881563901add19ee16fcffa",
-    img: "uhhu",
-    //ownerId: req.user._id,
+    img: "",
+    ownerId: user._id,
     date: new Date(),
   });
+
+  const result = await saveStoryToCloudinary(file.buffer, article._id);
+
+  console.log(result);
+
   res.status(201).json(article);
 };

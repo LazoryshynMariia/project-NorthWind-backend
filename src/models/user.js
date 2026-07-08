@@ -52,14 +52,11 @@ const userSchema = new Schema(
   },
 );
 
-userSchema.pre('save', async function hashUserPassword(next) {
+userSchema.pre('save', async function () {
   if (!this.isModified('password')) {
-    next();
     return;
   }
 
   this.password = await hashPassword(this.password);
-  next();
 });
-
 export const UserModel = model('user', userSchema);

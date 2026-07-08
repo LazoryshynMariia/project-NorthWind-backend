@@ -9,12 +9,13 @@ export const registerUser = async (req, res) => {
     throw createHttpError(409, "Email in use");
   }
 
-  const hashedPassword = await hashPassword(password);
+  //в проекті двічі хешувався пароль, потрібно або видалити тут 13 строку, або в моделі user відключити хук на збереження паролю
+  //const hashedPassword = await hashPassword(password);
 
   const newUser = await UserModel.create({
     name,
     email,
-    password: hashedPassword,
+    password//: hashedPassword,
   });
 
   res.status(201).json({
