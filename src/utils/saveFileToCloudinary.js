@@ -44,8 +44,8 @@ export async function saveStoryToCloudinary(buffer) {
         folder: 'northwind/stories',
         resource_type: 'image',
         transformation: [
-            { width: 1600, height: 1600, crop: "limit" },
-            { fetch_format: "auto", quality: "auto" },
+            { width: 1600, height: 1600, crop: 'limit' },
+            { fetch_format: 'auto', quality: 'auto' },
         ],
     };
 
