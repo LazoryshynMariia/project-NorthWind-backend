@@ -1,9 +1,7 @@
 import { registerUser } from "./auth/registerUser.js";
 import { updateTheme } from "./auth/updateTheme.js";
-import { loginController } from "./auth/loginController.js";
 
 export const auth = {
   registerUser,
   updateTheme,
-  loginController,
 };
