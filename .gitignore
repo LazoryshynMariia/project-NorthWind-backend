@@ -147,3 +147,4 @@ databasetest
 tests/
 newman/
 postman-collection-saved-stories.json
+PROJECT_STATUS.md
