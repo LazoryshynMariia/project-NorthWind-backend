@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { celebrate } from "celebrate";
-import { updatePersonalData } from "../controllers/updatePersonalDataController.js";
+
+import { users as ctrl } from "../controllers/index.js";
+
+// import { updatePersonalData } from "../controllers/updatePersonalDataController.js";
 import { updatePersonalDataSchema } from "../validations/updatePersonalDataSchema.js";
 import { authenticate } from "../middleware/authenticate.js";
 import {
@@ -17,7 +20,7 @@ usersRouter.patch(
   "/me/personal",
   authenticate,
   celebrate(updatePersonalDataSchema),
-  updatePersonalData,
+  ctrl.updatePersonalData,
 );
 
 export default usersRouter;

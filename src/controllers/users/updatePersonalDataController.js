@@ -1,4 +1,4 @@
-import { UserModel } from "../models/user.js";
+import { UserModel } from "../../models/user.js";
 import createHttpError from "http-errors";
 
 export const updatePersonalData = async (req, res, next) => {
