@@ -3,6 +3,10 @@ import createHttpError from 'http-errors';
 
 import { UserModel } from '../../models/user.js';
 import { comparePasswords } from '../../utils/comparePasswords.js';
+import {
+  JWT_ACCESS_EXPIRES_IN,
+  JWT_REFRESH_EXPIRES_IN,
+} from '../../constants/index.js';
 
 export const login = async ({ email, password }) => {
   const user = await UserModel.findOne({
@@ -32,7 +36,7 @@ export const login = async ({ email, password }) => {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
+      expiresIn: JWT_ACCESS_EXPIRES_IN,
     },
   );
 
@@ -42,7 +46,7 @@ export const login = async ({ email, password }) => {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+      expiresIn: JWT_REFRESH_EXPIRES_IN,
     },
   );
 
@@ -88,7 +92,7 @@ export const refreshSession = async (refreshToken) => {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
+      expiresIn: JWT_ACCESS_EXPIRES_IN,
     },
   );
 
@@ -98,7 +102,7 @@ export const refreshSession = async (refreshToken) => {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+      expiresIn: JWT_REFRESH_EXPIRES_IN,
     },
   );
 
