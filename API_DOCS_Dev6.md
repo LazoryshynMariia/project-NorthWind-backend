@@ -6,180 +6,155 @@
 http://localhost:3000/api
 ```
 
-## Аутентифікація
+---
 
-Всі ендпоінти захищені middleware `authenticate`. Потрібен JWT токен у заголовку:
+## Як тестувати (копіюй і вставляй у Postman)
+
+### Крок 1 — Реєстрація
 
 ```
-Authorization: Bearer <токен>
+POST http://localhost:3000/api/auth/register
+Body → raw → JSON:
+{"email":"dev6test2@mail.com","password":"Test123!","name":"Dev6"}
 ```
 
-### Як отримати токен
-
-1. Зареєструвати користувача:
-
-```http
-POST /api/auth/register
-Content-Type: application/json
-
-{
-  "email": "your-email@test.com",
-  "password": "Test123!",
-  "name": "Your Name"
-}
-```
-
-Відповідь (201):
+Очікувана відповідь (201):
 
 ```json
-{
-  "id": "6a4e3fcfb236e639cc9563ae",
-  "name": "Your Name",
-  "email": "your-email@test.com"
-}
-```
-
-2. Згенерувати токен (з кореня проєкту):
-
-```bash
-node -e "require('dotenv').config(); const jwt = require('jsonwebtoken'); console.log(jwt.sign({id:'ВАШ_USER_ID'}, process.env.JWT_SECRET, {expiresIn:'1d'}))"
+{ "id": "...", "name": "Dev6", "email": "dev6test2@mail.com" }
 ```
 
 ---
 
-## Ендпоінти
+### Крок 2 — Логін (отримати токен)
 
-### 1. Додати історію до збережених
-
-```http
-POST /api/users/saved-stories
-Authorization: Bearer <токен>
-Content-Type: application/json
-
-{
-  "storyId": "68498236a100312bea045fe6"
-}
+```
+POST http://localhost:3000/api/auth/login
+Body → raw → JSON:
+{"email":"dev6test2@mail.com","password":"Test123!"}
 ```
 
-**Валідація:**
-| Поле | Тип | Обов'язкове | Опис |
-|------|-----|-------------|------|
-| `storyId` | string (24 hex) | ✅ | MongoDB ObjectId статті |
-
-**Відповіді:**
-
-**201 Created** — успішно додано:
+Очікувана відповідь (200):
 
 ```json
 {
-  "userId": "6a4e3fcfb236e639cc9563ae",
+  "status": 200,
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs...",
+    "user": { "id": "...", "name": "Dev6", "email": "dev6test2@mail.com" }
+  }
+}
+```
+
+**Скопіюй `data.accessToken` — він потрібен для всіх наступних кроків.**
+
+---
+
+### Крок 3 — Додати історію до збережених
+
+```
+POST http://localhost:3000/api/users/saved-stories
+Headers:
+  Authorization: Bearer ТВІЙ_ТОКЕН
+  Content-Type: application/json
+Body → raw → JSON:
+{"storyId":"68498236a100312bea045fe6"}
+```
+
+Очікувана відповідь **(201 Created)**:
+
+```json
+{
+  "userId": "...",
   "storyId": "68498236a100312bea045fe6",
-  "_id": "6a4e4033e503d3021d2d465e",
-  "createdAt": "2026-07-08T12:18:59.053Z",
-  "updatedAt": "2026-07-08T12:18:59.053Z"
-}
-```
-
-**409 Conflict** — вже збережено:
-
-```json
-{
-  "message": "Story already saved"
-}
-```
-
-**401 Unauthorized** — токен відсутній або невалідний:
-
-```json
-{
-  "message": "Authorization header missing"
-}
-// або
-{
-  "message": "Invalid authorization header"
-}
-// або
-{
-  "message": "User not found"
-}
-```
-
-**400 Bad Request** — невалідний storyId:
-
-```json
-{
-  "message": "storyId must be a valid MongoDB ObjectId"
+  "_id": "...",
+  "createdAt": "...",
+  "updatedAt": "..."
 }
 ```
 
 ---
 
-### 2. Перевірити чи збережена історія
+### Крок 4 — Перевірити чи збережена історія
 
-```http
-GET /api/users/saved-stories/{storyId}
-Authorization: Bearer <токен>
+```
+GET http://localhost:3000/api/users/saved-stories/68498236a100312bea045fe6
+Headers:
+  Authorization: Bearer ТВІЙ_ТОКЕН
 ```
 
-**Відповіді:**
-
-**200 OK** — збережена:
+Очікувана відповідь **(200 OK)**:
 
 ```json
-{
-  "isSaved": true
-}
+{ "isSaved": true }
 ```
-
-**200 OK** — не збережена:
-
-```json
-{
-  "isSaved": false
-}
-```
-
-**401 Unauthorized** — токен відсутній або невалідний.
 
 ---
 
-### 3. Видалити зі збережених
+### Крок 5 — Дублікат (перевірка захисту)
 
-```http
-DELETE /api/users/saved-stories/{storyId}
-Authorization: Bearer <токен>
-```
+Повтори **Крок 3** з тим самим storyId.
 
-**Відповіді:**
-
-**200 OK** — успішно видалено:
+Очікувана відповідь **(409 Conflict)**:
 
 ```json
-{
-  "message": "Removed"
-}
+{ "message": "Story already saved" }
 ```
-
-**404 Not Found** — історія не була збережена:
-
-```json
-{
-  "message": "Saved story not found"
-}
-```
-
-**401 Unauthorized** — токен відсутній або невалідний.
 
 ---
 
-## Повний цикл тестування
+### Крок 6 — Видалити зі збережених
 
-| #   | Метод  | URL                         | Умова                     | Очікувана відповідь            |
-| --- | ------ | --------------------------- | ------------------------- | ------------------------------ |
-| 1   | POST   | `/users/saved-stories`      | З токеном + валідний body | 201 + об'єкт збереження        |
-| 2   | GET    | `/users/saved-stories/{id}` | З токеном                 | 200 + `{ isSaved: true }`      |
-| 3   | POST   | `/users/saved-stories`      | Дублікат (той же body)    | 409 + "already saved"          |
-| 4   | DELETE | `/users/saved-stories/{id}` | З токеном                 | 200 + `{ message: "Removed" }` |
-| 5   | GET    | `/users/saved-stories/{id}` | Після видалення           | 200 + `{ isSaved: false }`     |
-| 6   | POST   | `/users/saved-stories`      | Без токена                | 401                            |
-| 7   | DELETE | `/users/saved-stories/{id}` | Без токена                | 401                            |
+```
+DELETE http://localhost:3000/api/users/saved-stories/68498236a100312bea045fe6
+Headers:
+  Authorization: Bearer ТВІЙ_ТОКЕН
+```
+
+Очікувана відповідь **(200 OK)**:
+
+```json
+{ "message": "Removed" }
+```
+
+---
+
+### Крок 7 — Перевірити після видалення
+
+Повтори **Крок 4**.
+
+Очікувана відповідь **(200 OK)**:
+
+```json
+{ "isSaved": false }
+```
+
+---
+
+### Крок 8 — Без токена (перевірка захисту)
+
+```
+POST http://localhost:3000/api/users/saved-stories
+Body → raw → JSON:
+{"storyId":"68498236a100312bea045fe6"}
+```
+
+Очікувана відповідь **(401 Unauthorized)**:
+
+```json
+{ "message": "Authorization header missing" }
+```
+
+---
+
+## Усі можливі відповіді
+
+| Код | Коли виникає                                 | Приклад                                                  |
+| --- | -------------------------------------------- | -------------------------------------------------------- |
+| 201 | Успішне додавання                            | `{userId, storyId, _id}`                                 |
+| 200 | Успішна перевірка / видалення                | `{isSaved: true/false}` або `{message: "Removed"}`       |
+| 400 | Невалідний storyId                           | `{"message":"storyId must be a valid MongoDB ObjectId"}` |
+| 401 | Немає токена / токен протух / юзера видалено | `{"message":"Authorization header missing"}`             |
+| 404 | Видалення неіснуючого збереження             | `{"message":"Saved story not found"}`                    |
+| 409 | Дублікат                                     | `{"message":"Story already saved"}`                      |

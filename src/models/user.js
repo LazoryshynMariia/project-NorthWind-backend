@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose';
 
+import { hashPassword } from '../utils/hashPassword.js';
+
 const userSchema = new Schema(
   {
     name: {
@@ -40,7 +42,7 @@ const userSchema = new Schema(
     savedArticles: [
       {
         type: Schema.Types.ObjectId,
-        ref: "articles",
+        ref: 'articles',
       },
     ],
   },
@@ -50,4 +52,12 @@ const userSchema = new Schema(
   },
 );
 
-export const UserModel = model("user", userSchema);
+userSchema.pre('save', async function hashUserPassword() {
+  if (!this.isModified('password')) {
+    return;
+  }
+
+  this.password = await hashPassword(this.password);
+});
+
+export const UserModel = model('user', userSchema);
