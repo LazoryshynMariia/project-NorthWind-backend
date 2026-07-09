@@ -13,8 +13,11 @@ import { checkSavedStoryController } from '../controllers/savedStories/checkSave
 import { getSavedStoriesController } from '../controllers/savedStories/getSavedStories.js';
 import { updatePersonalDataSchema } from '../validations/updatePersonalDataSchema.js';
 import { updatePersonalData } from '../controllers/users/updatePersonalDataController.js';
+import { getMe } from '../controllers/users/getMe.js';
 
 const usersRouter = Router();
+
+usersRouter.get('/me', authenticate, getMe);
 
 usersRouter.get('/travellers/top', getTopTravellers);
 usersRouter.get('/travellers', getTravellers);
