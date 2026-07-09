@@ -10,9 +10,11 @@ import { addStory } from "../controllers/stories/storiesController.js";
 import { getStoryById } from "../controllers/stories/getStoryById.js";
 import { getRecommendedStories } from "../controllers/stories/getRecommendedStories.js";
 import { upload } from "../middleware/multer.js";
+import { getPopularStories } from "../controllers/stories/getPopularStories.js";
 
 const storiesRouter = Router();
 
+storiesRouter.get("/popular", getPopularStories);
 storiesRouter.get("/recommended", getRecommendedStories);
 
 storiesRouter.get("/:storyId", getStoryById);
