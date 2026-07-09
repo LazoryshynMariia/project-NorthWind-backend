@@ -1,5 +1,9 @@
-import { Router } from 'express';
+import express from 'express';
+import { getMe } from '../controllers/userController.js';
+import { protect } from '../middlewares/auth.js';
 
-const usersRouter = Router();
+const router = express.Router();
 
-export default usersRouter;
+router.get('/me', protect, getMe);
+
+export default router;
