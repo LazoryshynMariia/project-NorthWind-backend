@@ -51,4 +51,11 @@ usersRouter.patch(
   users.updatePersonalData,
 );
 
+usersRouter.patch(
+  '/me/theme',
+  authenticate,
+  celebrate(usersValidation.updateThemeSchema),
+  users.updateTheme,
+);
+
 export default usersRouter;

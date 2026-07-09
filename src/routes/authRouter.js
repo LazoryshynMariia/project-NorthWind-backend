@@ -22,11 +22,5 @@ authRouter.post(
 
 // Private routes
 authRouter.post('/logout', authenticate, auth.logoutController);
-authRouter.patch(
-  '/theme',
-  authenticate,
-  celebrate(authValidation.updateThemeSchema),
-  auth.updateTheme,
-);
 
 export default authRouter;
