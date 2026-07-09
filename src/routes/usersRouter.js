@@ -10,6 +10,9 @@ import { addSavedStoryController } from '../controllers/savedStories/addSavedSto
 import { removeSavedStoryController } from '../controllers/savedStories/removeSavedStory.js';
 import { checkSavedStoryController } from '../controllers/savedStories/checkSavedStory.js';
 import { getSavedStoriesController } from '../controllers/savedStories/getSavedStories.js';
+import { celebrate } from "celebrate";
+import { updatePersonalDataSchema } from '../validations/updatePersonalDataSchema.js';
+import { users } from '../controllers/index.js';
 
 const usersRouter = Router();
 
@@ -39,7 +42,7 @@ usersRouter.patch(
   '/me/personal',
   authenticate,
   celebrate(updatePersonalDataSchema),
-  ctrl.updatePersonalData,
+  users.updatePersonalData,
 );
 
 export default usersRouter;

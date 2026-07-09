@@ -39,8 +39,10 @@ export async function saveAvatarToCloudinary(buffer, userId) {
     return uploadToCloudinary(buffer, options);
 };
 
-export async function saveStoryToCloudinary(buffer) {
-    const options = {
+export async function saveStoryToCloudinary(buffer, storyId) {
+
+  const options = {
+       public_id: `stories_${storyId}`,
         folder: 'northwind/stories',
         resource_type: 'image',
         transformation: [

@@ -8,6 +8,7 @@ import { getRecommendedStories } from '../controllers/stories/getRecommendedStor
 import { getPopularStories } from '../controllers/stories/getPopularStories.js';
 
 import { upload } from '../middleware/multer.js';
+import { authenticate } from '../middleware/authenticate.js';
 
 import { getAllStoriesSchema } from '../validations/storiesValidationSchema.js';
 import { createStorySchema } from '../validations/articlies/addStoryValidation.js';
@@ -23,8 +24,9 @@ storiesRouter.get('/:storyId', getStoryById);
 
 storiesRouter.post(
   '/',
+    authenticate,
+  upload.single("img"),
   celebrate(createStorySchema, { abortEarly: false }),
-  upload.single('img'),
   addStory,
 );
 
