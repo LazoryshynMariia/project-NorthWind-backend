@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose';
 
+import { hashPassword } from '../utils/hashPassword.js';
+
 const userSchema = new Schema(
   {
     name: {
@@ -8,6 +10,7 @@ const userSchema = new Schema(
       trim: true,
       maxlength: 32,
     },
+
     email: {
       type: String,
       required: true,
@@ -15,18 +18,22 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
+
     password: {
       type: String,
       required: true,
     },
+
     refreshToken: {
       type: String,
       default: null,
     },
+
     avatarUrl: {
       type: String,
       default: null,
     },
+
     articlesAmount: {
       type: Number,
       default: 0,
@@ -42,10 +49,26 @@ const userSchema = new Schema(
       enum: ["light", "dark"],
       default: "light",
     },
+
+    savedArticles: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'articles',
+      },
+    ],
   },
   {
     timestamps: true,
     versionKey: false,
   },
 );
-export const UserModel = model("user", userSchema);
+
+userSchema.pre('save', async function hashUserPassword() {
+  if (!this.isModified('password')) {
+    return;
+  }
+
+  this.password = await hashPassword(this.password);
+});
+
+export const UserModel = model('user', userSchema);

@@ -5,3 +5,4 @@ export const auth = {
   registerUser,
   updateTheme,
 };
+export * from './loginController.js';

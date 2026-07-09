@@ -17,7 +17,10 @@ export const login = async ({ email, password }) => {
     throw createHttpError(401, 'Email or password is incorrect');
   }
 
-  const isPasswordValid = await comparePasswords(password, user.password);
+  const isPasswordValid = await comparePasswords(
+    password,
+    user.password,
+  );
 
   if (!isPasswordValid) {
     throw createHttpError(401, 'Email or password is incorrect');
@@ -28,15 +31,23 @@ export const login = async ({ email, password }) => {
   }
 
   const accessToken = jwt.sign(
-    { id: user.id },
+    {
+      id: user.id,
+    },
     process.env.JWT_SECRET,
-    { expiresIn: JWT_ACCESS_EXPIRES_IN },
+    {
+      expiresIn: JWT_ACCESS_EXPIRES_IN,
+    },
   );
 
   const refreshToken = jwt.sign(
-    { id: user.id },
+    {
+      id: user.id,
+    },
     process.env.JWT_SECRET,
-    { expiresIn: JWT_REFRESH_EXPIRES_IN },
+    {
+      expiresIn: JWT_REFRESH_EXPIRES_IN,
+    },
   );
 
   await UserModel.findByIdAndUpdate(user.id, { refreshToken });
@@ -77,15 +88,23 @@ export const refreshSession = async (refreshToken) => {
   }
 
   const newAccessToken = jwt.sign(
-    { id: user.id },
+    {
+      id: user.id,
+    },
     process.env.JWT_SECRET,
-    { expiresIn: JWT_ACCESS_EXPIRES_IN },
+    {
+      expiresIn: JWT_ACCESS_EXPIRES_IN,
+    },
   );
 
   const newRefreshToken = jwt.sign(
-    { id: user.id },
+    {
+      id: user.id,
+    },
     process.env.JWT_SECRET,
-    { expiresIn: JWT_REFRESH_EXPIRES_IN },
+    {
+      expiresIn: JWT_REFRESH_EXPIRES_IN,
+    },
   );
 
   await UserModel.findByIdAndUpdate(user.id, {
