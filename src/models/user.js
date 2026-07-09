@@ -50,12 +50,6 @@ const userSchema = new Schema(
       default: "light",
     },
 
-    savedArticles: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'articles',
-      },
-    ],
   },
   {
     timestamps: true,
