@@ -41,15 +41,14 @@ const userSchema = new Schema(
     savedArticles: [
       {
         type: Schema.Types.ObjectId,
-        ref: "articles",
+        ref: 'articles',
       },
     ],
     theme: {
       type: String,
-      enum: ["light", "dark"],
-      default: "light",
+      enum: ['light', 'dark'],
+      default: 'light',
     },
-
   },
   {
     timestamps: true,
@@ -64,4 +63,4 @@ userSchema.pre('save', async function hashUserPassword() {
 
   this.password = await hashPassword(this.password);
 });
-export const UserModel = model('user', userSchema);
+export const UserModel = model('users', userSchema);
