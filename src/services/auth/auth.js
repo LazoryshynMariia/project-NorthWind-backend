@@ -14,14 +14,8 @@ export const login = async ({ email, password }) => {
   });
 
   if (!user) {
-    console.log(1);
-
     throw createHttpError(401, 'Email or password is incorrect');
   }
-
-  console.log(user, password,
-    user.password,);
-
 
   const isPasswordValid = await comparePasswords(
     password,
@@ -29,7 +23,6 @@ export const login = async ({ email, password }) => {
   );
 
   if (!isPasswordValid) {
-        console.log(2);
     throw createHttpError(401, 'Email or password is incorrect');
   }
 
