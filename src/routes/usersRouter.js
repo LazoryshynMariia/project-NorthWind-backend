@@ -1,18 +1,18 @@
 import { Router } from 'express';
+import { celebrate } from 'celebrate';
+import { authenticate } from '../middleware/authenticate.js';
 import {
   getTravellers,
   getTopTravellers,
   getTravellerById,
 } from '../controllers/users/index.js';
-import { authenticate } from '../middleware/authenticate.js';
 import { addSavedStoryValidation } from '../validations/savedStories/addSavedStoryValidation.js';
 import { addSavedStoryController } from '../controllers/savedStories/addSavedStory.js';
 import { removeSavedStoryController } from '../controllers/savedStories/removeSavedStory.js';
 import { checkSavedStoryController } from '../controllers/savedStories/checkSavedStory.js';
 import { getSavedStoriesController } from '../controllers/savedStories/getSavedStories.js';
-import { celebrate } from "celebrate";
 import { updatePersonalDataSchema } from '../validations/updatePersonalDataSchema.js';
-import { users } from '../controllers/index.js';
+import { updatePersonalData } from '../controllers/users/updatePersonalDataController.js';
 
 const usersRouter = Router();
 
@@ -42,7 +42,7 @@ usersRouter.patch(
   '/me/personal',
   authenticate,
   celebrate(updatePersonalDataSchema),
-  users.updatePersonalData,
+  updatePersonalData,
 );
 
 export default usersRouter;
