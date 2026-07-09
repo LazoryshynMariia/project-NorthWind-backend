@@ -1,5 +1,4 @@
 import { registerUser } from './auth/registerUser.js';
-import { updateTheme } from './auth/updateTheme.js';
 import { loginController } from './auth/loginController.js';
 import { logoutController } from './auth/logoutController.js';
 import { refreshController } from './auth/refreshController.js';
@@ -17,6 +16,7 @@ import { getTravellers } from './users/getTravellers.js';
 import { getTopTravellers } from './users/getTravellers.js';
 import { getTravellerById } from './users/getTravellerById.js';
 import { updatePersonalData } from './users/updatePersonalDataController.js';
+import { updateTheme } from './users/updateTheme.js';
 
 import { addSavedStoryController } from './savedStories/addSavedStory.js';
 import { removeSavedStoryController } from './savedStories/removeSavedStory.js';
@@ -25,7 +25,6 @@ import { getSavedStoriesController } from './savedStories/getSavedStories.js';
 
 export const auth = {
   registerUser,
-  updateTheme,
   loginController,
   logoutController,
   refreshController,
@@ -49,6 +48,7 @@ export const users = {
   getTopTravellers,
   getTravellerById,
   updatePersonalData,
+  updateTheme,
 };
 
 export const savedStories = {

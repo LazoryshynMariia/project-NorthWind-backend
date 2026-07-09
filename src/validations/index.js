@@ -1,7 +1,6 @@
 import { registerUserSchema } from './auth/registerValidation.js';
 import { loginValidation } from './auth/loginValidation.js';
 import { refreshValidation } from './auth/refreshValidation.js';
-import { updateThemeSchema } from './auth/updateThemeSchema.js';
 import {
   getAllStoriesSchema,
   storyIdParamSchema,
@@ -15,12 +14,12 @@ import {
   updatePersonalDataSchema,
   travellerIdParamSchema,
 } from './updatePersonalDataSchema.js';
+import { updateThemeSchema } from './updateThemeSchema.js';
 
 export const auth = {
   registerUserSchema,
   loginValidation,
   refreshValidation,
-  updateThemeSchema,
 };
 
 export const stories = {
@@ -37,4 +36,5 @@ export const savedStories = {
 export const users = {
   updatePersonalDataSchema,
   travellerIdParamSchema,
+  updateThemeSchema,
 };
