@@ -7,6 +7,9 @@ export const auth = {
   registerUser,
 };
 
+export { addSavedStoryController } from "./savedStories/addSavedStory.js";
+export { removeSavedStoryController } from "./savedStories/removeSavedStory.js";
+export { checkSavedStoryController } from "./savedStories/checkSavedStory.js";
 export const stories = {
   getPopularStories,
   getAllStories,

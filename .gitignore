@@ -142,3 +142,9 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 TODO.md
+postman-collection-saved-stories.json
+databasetest
+tests/
+newman/
+postman-collection-saved-stories.json
+PROJECT_STATUS.md
