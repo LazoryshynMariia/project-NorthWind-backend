@@ -42,7 +42,7 @@ const userSchema = new Schema(
     savedArticles: [
       {
         type: Schema.Types.ObjectId,
-        ref: "articles",
+        ref: 'articles',
       },
     ],
   },
@@ -52,14 +52,12 @@ const userSchema = new Schema(
   },
 );
 
-userSchema.pre('save', async function hashUserPassword(next) {
+userSchema.pre('save', async function hashUserPassword() {
   if (!this.isModified('password')) {
-    next();
     return;
   }
 
   this.password = await hashPassword(this.password);
-  next();
 });
 
 export const UserModel = model('user', userSchema);
