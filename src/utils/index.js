@@ -1,1 +1,1 @@
-export * from './saveFileToCloudinary.js'
+export * from "./saveFileToCloudinary.js";

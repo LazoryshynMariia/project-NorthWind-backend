@@ -1,19 +1,16 @@
 import { registerUser } from "./auth/registerUser.js";
 import { updateTheme } from "./auth/updateTheme.js";
 import { loginController } from "./auth/loginController.js";
-
-export const auth = {
-  registerUser,
-  updateTheme,
-  loginController,
-};
 import { getPopularStories } from "./stories/getPopularStories.js";
 import { getAllStories } from "./stories/getAllStoriesController.js";
 import { updatePersonalData} from "./users/updatePersonalDataController.js";
 
 export const auth = {
   registerUser,
+  updateTheme,
+  loginController
 };
+
 
 export { addSavedStoryController } from "./savedStories/addSavedStory.js";
 export { removeSavedStoryController } from "./savedStories/removeSavedStory.js";
