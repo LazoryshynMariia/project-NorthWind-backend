@@ -10,14 +10,20 @@ export const addStory = async (req, res) => {
 
   const article = await Article.create({
     ...req.body,
-    img: "",
+    img: "fake",
     ownerId: user._id,
     date: new Date(),
   });
 
   const result = await saveStoryToCloudinary(file.buffer, article._id);
 
-  console.log(result);
 
-  res.status(201).json(article);
+const updatedArticle = await Article.findByIdAndUpdate(
+  article._id,
+  { img: result.secure_url },
+  { new: true }
+);
+
+res.status(201).json(updatedArticle);
+
 };
