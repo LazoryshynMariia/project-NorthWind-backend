@@ -38,13 +38,18 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
-
     savedArticles: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'articles',
+        ref: "articles",
       },
     ],
+    theme: {
+      type: String,
+      enum: ["light", "dark"],
+      default: "light",
+    },
+
   },
   {
     timestamps: true,
