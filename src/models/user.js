@@ -41,7 +41,7 @@ const userSchema = new Schema(
     savedArticles: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'articles',
+        ref: 'Article',
       },
     ],
     theme: {

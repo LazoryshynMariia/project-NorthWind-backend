@@ -1,1 +1,40 @@
-export { addSavedStoryValidation } from "./savedStories/index.js";
+import { registerUserSchema } from './auth/registerValidation.js';
+import { loginValidation } from './auth/loginValidation.js';
+import { refreshValidation } from './auth/refreshValidation.js';
+import { updateThemeSchema } from './auth/updateThemeSchema.js';
+import {
+  getAllStoriesSchema,
+  storyIdParamSchema,
+} from './storiesValidationSchema.js';
+import { createStorySchema } from './articlies/addStoryValidation.js';
+import {
+  addSavedStoryValidation,
+  savedStoryParamsValidation,
+} from './savedStories/addSavedStoryValidation.js';
+import {
+  updatePersonalDataSchema,
+  travellerIdParamSchema,
+} from './updatePersonalDataSchema.js';
+
+export const auth = {
+  registerUserSchema,
+  loginValidation,
+  refreshValidation,
+  updateThemeSchema,
+};
+
+export const stories = {
+  getAllStoriesSchema,
+  storyIdParamSchema,
+  createStorySchema,
+};
+
+export const savedStories = {
+  addSavedStoryValidation,
+  savedStoryParamsValidation,
+};
+
+export const users = {
+  updatePersonalDataSchema,
+  travellerIdParamSchema,
+};

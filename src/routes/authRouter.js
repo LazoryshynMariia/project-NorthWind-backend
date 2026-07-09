@@ -1,26 +1,32 @@
-import { Router } from "express";
-import { celebrate } from "celebrate";
+import { Router } from 'express';
+import { celebrate } from 'celebrate';
 
-import { auth as ctrl } from "../controllers/index.js";
-import { registerUserSchema } from '../validations/auth/registerValidation.js';
-import { loginValidation } from '../validations/auth/loginValidation.js';
-import { updateThemeSchema } from '../validations/auth/updateThemeSchema.js';
-import { authenticate } from "../middleware/authenticate.js";
-
-import { refreshValidation } from '../validations/auth/refreshValidation.js';
-import { loginController } from '../controllers/auth/loginController.js';
-import { logoutController } from '../controllers/auth/logoutController.js';
-import { refreshController } from '../controllers/auth/refreshController.js';
+import { auth } from '../controllers/index.js';
+import { auth as authValidation } from '../validations/index.js';
+import { authenticate } from '../middleware/authenticate.js';
 
 const authRouter = Router();
 
 // Public routes
-authRouter.post('/register', celebrate(registerUserSchema), ctrl.registerUser);
-authRouter.post('/login', loginValidation, loginController);
-authRouter.post('/refresh', refreshValidation, refreshController);
+authRouter.post(
+  '/register',
+  celebrate(authValidation.registerUserSchema),
+  auth.registerUser,
+);
+authRouter.post('/login', authValidation.loginValidation, auth.loginController);
+authRouter.post(
+  '/refresh',
+  authValidation.refreshValidation,
+  auth.refreshController,
+);
 
 // Private routes
-authRouter.post('/logout', authenticate, logoutController);
-authRouter.patch("/theme", authenticate, celebrate(updateThemeSchema), ctrl.updateTheme);
+authRouter.post('/logout', authenticate, auth.logoutController);
+authRouter.patch(
+  '/theme',
+  authenticate,
+  celebrate(authValidation.updateThemeSchema),
+  auth.updateTheme,
+);
 
 export default authRouter;
