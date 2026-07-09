@@ -12,7 +12,6 @@ import { errorHandler } from "./middleware/errorHandler.js";
 
 import authRouter from "./routes/authRouter.js";
 import categoriesRouter from "./routes/categoriesRouter.js";
-import savedStoriesRouter from "./routes/savedStoriesRouter.js";
 import storiesRouter from "./routes/storiesRouter.js";
 import usersRouter from "./routes/usersRouter.js";
 
