@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { authenticate } from '../middleware/authenticate.js';
 import {
   getTravellers,
   getTopTravellers,
-} from '../controllers/users/getTravellers.js';
-import { getTravellerById } from '../controllers/users/getTravellerById.js';
+  getTravellerById,
+} from '../controllers/users/index.js';
+import { authenticate } from '../middleware/authenticate.js';
 import { addSavedStoryValidation } from '../validations/savedStories/addSavedStoryValidation.js';
 import { addSavedStoryController } from '../controllers/savedStories/addSavedStory.js';
 import { removeSavedStoryController } from '../controllers/savedStories/removeSavedStory.js';
@@ -34,14 +34,6 @@ usersRouter.get(
   authenticate,
   checkSavedStoryController,
 );
-} from "../controllers/users/getTravellers.js";
-import { getTravellerById } from "../controllers/users/getTravellerById.js";
-
-const usersRouter = Router();
-
-usersRouter.get("/travellers/top", getTopTravellers);
-usersRouter.get("/travellers", getTravellers);
-usersRouter.get("/travellers/:travellerId", getTravellerById);
 
 usersRouter.patch(
   '/me/personal',
