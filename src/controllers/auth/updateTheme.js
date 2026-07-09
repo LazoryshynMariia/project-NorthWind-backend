@@ -20,6 +20,6 @@ export const updateTheme = async (req, res, next) => {
       theme: updatedUser.theme,
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };

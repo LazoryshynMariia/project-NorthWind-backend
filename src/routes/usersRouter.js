@@ -1,51 +1,54 @@
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
+
 import { authenticate } from '../middleware/authenticate.js';
+import { savedStories, users } from '../controllers/index.js';
 import {
-  getTravellers,
-  getTopTravellers,
-  getTravellerById,
-} from '../controllers/users/index.js';
-import { addSavedStoryValidation } from '../validations/savedStories/addSavedStoryValidation.js';
-import { addSavedStoryController } from '../controllers/savedStories/addSavedStory.js';
-import { removeSavedStoryController } from '../controllers/savedStories/removeSavedStory.js';
-import { checkSavedStoryController } from '../controllers/savedStories/checkSavedStory.js';
-import { getSavedStoriesController } from '../controllers/savedStories/getSavedStories.js';
-import { updatePersonalDataSchema } from '../validations/updatePersonalDataSchema.js';
-import { updatePersonalData } from '../controllers/users/updatePersonalDataController.js';
-import { getMe } from '../controllers/users/getMe.js';
+  savedStories as savedStoriesValidation,
+  users as usersValidation,
+} from '../validations/index.js';
 
 const usersRouter = Router();
 
-usersRouter.get('/me', authenticate, getMe);
+usersRouter.get('/me', authenticate, users.getMe);
 
-usersRouter.get('/travellers/top', getTopTravellers);
-usersRouter.get('/travellers', getTravellers);
-usersRouter.get('/travellers/:travellerId', getTravellerById);
+usersRouter.get('/travellers/top', users.getTopTravellers);
+usersRouter.get('/travellers', users.getTravellers);
+usersRouter.get(
+  '/travellers/:travellerId',
+  celebrate(usersValidation.travellerIdParamSchema),
+  users.getTravellerById,
+);
 
 usersRouter.post(
   '/saved-stories',
   authenticate,
-  addSavedStoryValidation,
-  addSavedStoryController,
+  savedStoriesValidation.addSavedStoryValidation,
+  savedStories.addSavedStoryController,
 );
 usersRouter.delete(
   '/saved-stories/:storyId',
   authenticate,
-  removeSavedStoryController,
+  savedStoriesValidation.savedStoryParamsValidation,
+  savedStories.removeSavedStoryController,
 );
-usersRouter.get('/saved-stories', authenticate, getSavedStoriesController);
+usersRouter.get(
+  '/saved-stories',
+  authenticate,
+  savedStories.getSavedStoriesController,
+);
 usersRouter.get(
   '/saved-stories/:storyId',
   authenticate,
-  checkSavedStoryController,
+  savedStoriesValidation.savedStoryParamsValidation,
+  savedStories.checkSavedStoryController,
 );
 
 usersRouter.patch(
   '/me/personal',
   authenticate,
-  celebrate(updatePersonalDataSchema),
-  updatePersonalData,
+  celebrate(usersValidation.updatePersonalDataSchema),
+  users.updatePersonalData,
 );
 
 export default usersRouter;

@@ -1,15 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const savedStorySchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'users',
       required: true,
     },
     storyId: {
       type: Schema.Types.ObjectId,
-      ref: "Article",
+      ref: 'Article',
       required: true,
     },
   },
@@ -18,4 +18,4 @@ const savedStorySchema = new Schema(
 
 savedStorySchema.index({ userId: 1, storyId: 1 }, { unique: true });
 
-export const SavedStoryModel = model("savedStory", savedStorySchema);
+export const SavedStoryModel = model('savedStory', savedStorySchema);

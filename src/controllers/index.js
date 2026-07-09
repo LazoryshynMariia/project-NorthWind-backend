@@ -1,22 +1,34 @@
 import { registerUser } from './auth/registerUser.js';
 import { updateTheme } from './auth/updateTheme.js';
 import { loginController } from './auth/loginController.js';
+import { logoutController } from './auth/logoutController.js';
+import { refreshController } from './auth/refreshController.js';
+
 import { getCategories } from './categories/getCategories.js';
+
 import { getPopularStories } from './stories/getPopularStories.js';
 import { getAllStories } from './stories/getAllStoriesController.js';
-import { updatePersonalData } from './users/updatePersonalDataController.js';
 import { getRecommendedStories } from './stories/getRecommendedStories.js';
 import { getStoryById } from './stories/getStoryById.js';
 import { addStory } from './stories/storiesController.js';
 
-export { addSavedStoryController } from './savedStories/addSavedStory.js';
-export { removeSavedStoryController } from './savedStories/removeSavedStory.js';
-export { checkSavedStoryController } from './savedStories/checkSavedStory.js';
+import { getMe } from './users/getMe.js';
+import { getTravellers } from './users/getTravellers.js';
+import { getTopTravellers } from './users/getTravellers.js';
+import { getTravellerById } from './users/getTravellerById.js';
+import { updatePersonalData } from './users/updatePersonalDataController.js';
+
+import { addSavedStoryController } from './savedStories/addSavedStory.js';
+import { removeSavedStoryController } from './savedStories/removeSavedStory.js';
+import { checkSavedStoryController } from './savedStories/checkSavedStory.js';
+import { getSavedStoriesController } from './savedStories/getSavedStories.js';
 
 export const auth = {
   registerUser,
   updateTheme,
   loginController,
+  logoutController,
+  refreshController,
 };
 
 export const categories = {
@@ -32,5 +44,16 @@ export const stories = {
 };
 
 export const users = {
+  getMe,
+  getTravellers,
+  getTopTravellers,
+  getTravellerById,
   updatePersonalData,
+};
+
+export const savedStories = {
+  addSavedStoryController,
+  removeSavedStoryController,
+  checkSavedStoryController,
+  getSavedStoriesController,
 };
