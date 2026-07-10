@@ -104,6 +104,25 @@ Headers:
 
 ---
 
+### Крок 5.1 — Неіснуюча історія
+
+```http
+POST http://localhost:3000/api/users/saved-stories
+Headers:
+  Authorization: Bearer ТВІЙ_ТОКЕН
+  Content-Type: application/json
+Body → raw → JSON:
+{"storyId":"6881563901add19ee16fd054"}
+```
+
+Очікувана відповідь **(404 Not Found)**:
+
+```json
+{ "message": "Story not found" }
+```
+
+---
+
 ### Крок 6 — Видалити зі збережених
 
 ```
@@ -156,5 +175,6 @@ Body → raw → JSON:
 | 200 | Успішна перевірка / видалення                | `{isSaved: true/false}` або `{message: "Removed"}`       |
 | 400 | Невалідний storyId                           | `{"message":"storyId must be a valid MongoDB ObjectId"}` |
 | 401 | Немає токена / токен протух / юзера видалено | `{"message":"Authorization header missing"}`             |
+| 404 | Історія з таким storyId не існує             | `{"message":"Story not found"}`                          |
 | 404 | Видалення неіснуючого збереження             | `{"message":"Saved story not found"}`                    |
 | 409 | Дублікат                                     | `{"message":"Story already saved"}`                      |
