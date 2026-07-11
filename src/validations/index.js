@@ -13,6 +13,7 @@ import {
 import {
   updatePersonalDataSchema,
   travellerIdParamSchema,
+  getTravellersQuerySchema,
 } from './updatePersonalDataSchema.js';
 import { updateThemeSchema } from './updateThemeSchema.js';
 
@@ -36,5 +37,6 @@ export const savedStories = {
 export const users = {
   updatePersonalDataSchema,
   travellerIdParamSchema,
+  getTravellersQuerySchema,
   updateThemeSchema,
 };
