@@ -13,7 +13,11 @@ const usersRouter = Router();
 usersRouter.get('/me', authenticate, users.getMe);
 
 usersRouter.get('/travellers/top', users.getTopTravellers);
-usersRouter.get('/travellers', users.getTravellers);
+usersRouter.get(
+  '/travellers',
+  celebrate(usersValidation.getTravellersQuerySchema),
+  users.getTravellers,
+);
 usersRouter.get(
   '/travellers/:travellerId',
   celebrate(usersValidation.travellerIdParamSchema),
