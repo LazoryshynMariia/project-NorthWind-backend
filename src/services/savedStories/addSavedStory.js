@@ -11,6 +11,8 @@ export const addSavedStory = async (userId, storyId) => {
     }
 
     const saved = await SavedStoryModel.create({ userId, storyId });
+    await Article.findByIdAndUpdate(storyId, { $inc: { rate: 1 } });
+
     return saved;
   } catch (error) {
     if (error.code === 11000) {

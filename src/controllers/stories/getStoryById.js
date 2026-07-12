@@ -1,5 +1,5 @@
-import createHttpError from "http-errors";
-import { getStoryById as getStoryByIdService } from "../../services/stories/getStoryById.js";
+import createHttpError from 'http-errors';
+import { getStoryById as getStoryByIdService } from '../../services/stories/getStoryById.js';
 
 export async function getStoryById(req, res, next) {
   try {
@@ -8,12 +8,12 @@ export async function getStoryById(req, res, next) {
     const story = await getStoryByIdService(storyId);
 
     if (!story) {
-      throw createHttpError(404, "Story not found");
+      throw createHttpError(404, 'Story not found');
     }
 
     res.status(200).json({
       status: 200,
-      message: "Successfully found story",
+      message: 'Successfully found story',
       data: story,
     });
   } catch (error) {
