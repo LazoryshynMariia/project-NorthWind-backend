@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { Article } from '../../models/article.js';
+import { addSavesCountToStories } from '../../services/savedStories/getSavesCount.js';
 
 export const getAllStories = async (req, res, next) => {
   try {
@@ -33,8 +34,10 @@ export const getAllStories = async (req, res, next) => {
       Article.countDocuments(filter),
     ]);
 
+    const storiesWithSavesCount = await addSavesCountToStories(data);
+
     return res.status(200).json({
-      data,
+      data: storiesWithSavesCount,
       page: Number(page),
       perPage: Number(perPage),
       totalItems,
