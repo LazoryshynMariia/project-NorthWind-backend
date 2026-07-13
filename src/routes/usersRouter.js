@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
+import { upload } from '../middleware/multer.js';
 
 import { authenticate } from '../middleware/authenticate.js';
 import { savedStories, users } from '../controllers/index.js';
@@ -51,6 +52,7 @@ usersRouter.get(
 usersRouter.patch(
   '/me/personal',
   authenticate,
+  upload.single('avatar'),
   celebrate(usersValidation.updatePersonalDataSchema),
   users.updatePersonalData,
 );
