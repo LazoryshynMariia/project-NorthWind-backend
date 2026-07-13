@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { celebrate } from 'celebrate';
 
 import { authenticate } from '../middleware/authenticate.js';
+import { upload } from '../middleware/multer.js';
 import { savedStories, users } from '../controllers/index.js';
 import {
   savedStories as savedStoriesValidation,
@@ -60,6 +61,13 @@ usersRouter.patch(
   authenticate,
   celebrate(usersValidation.updateThemeSchema),
   users.updateTheme,
+);
+
+usersRouter.patch(
+  '/me/avatar',
+  authenticate,
+  upload.single('avatar'),
+  users.updateAvatar,
 );
 
 export default usersRouter;

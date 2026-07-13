@@ -17,6 +17,7 @@ import { getTopTravellers } from './users/getTravellers.js';
 import { getTravellerById } from './users/getTravellerById.js';
 import { updatePersonalData } from './users/updatePersonalDataController.js';
 import { updateTheme } from './users/updateTheme.js';
+import { updateAvatar } from './users/updateAvatar.js';
 
 import { addSavedStoryController } from './savedStories/addSavedStory.js';
 import { removeSavedStoryController } from './savedStories/removeSavedStory.js';
@@ -49,6 +50,7 @@ export const users = {
   getTravellerById,
   updatePersonalData,
   updateTheme,
+  updateAvatar,
 };
 
 export const savedStories = {
