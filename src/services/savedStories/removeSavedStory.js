@@ -9,7 +9,10 @@ export const removeSavedStory = async (userId, storyId) => {
     throw createHttpError(404, 'Saved story not found');
   }
 
-  await Article.findByIdAndUpdate(storyId, { $inc: { rate: -1 } });
+  await Article.updateOne(
+    { _id: storyId, rate: { $gt: 0 } },
+    { $inc: { rate: -1 } },
+  );
 
   return result;
 };
