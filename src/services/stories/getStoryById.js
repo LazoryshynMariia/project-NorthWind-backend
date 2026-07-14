@@ -1,10 +1,12 @@
-import { isValidObjectId } from "mongoose";
-import { Article } from "../../models/article.js";
+import { isValidObjectId } from 'mongoose';
+import { Article } from '../../models/article.js';
 
 export async function getStoryById(storyId) {
   if (!isValidObjectId(storyId)) {
     return null;
   }
 
-  return Article.findById(storyId);
+  return Article.findById(storyId)
+    .populate('category')
+    .populate('ownerId', 'name avatarUrl');
 }

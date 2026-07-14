@@ -3,7 +3,12 @@ import { Article } from '../../models/article.js';
 
 export const getAllStories = async (req, res, next) => {
   try {
-    const { page = 1, perPage = 10, author: queryAuthor } = req.query;
+    const {
+      page = 1,
+      perPage = 10,
+      author: queryAuthor,
+      category,
+    } = req.query;
 
     const headerAuthor = req.get('autor');
     const author = queryAuthor || headerAuthor;
@@ -21,6 +26,17 @@ export const getAllStories = async (req, res, next) => {
       }
 
       filter.ownerId = new mongoose.Types.ObjectId(author);
+    }
+
+    if (category) {
+      if (!mongoose.isValidObjectId(category)) {
+        return res.status(400).json({
+          status: 400,
+          message: 'Invalid category id',
+        });
+      }
+
+      filter.category = new mongoose.Types.ObjectId(category);
     }
 
     const [data, totalItems] = await Promise.all([
