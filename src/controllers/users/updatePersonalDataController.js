@@ -7,11 +7,19 @@ export const updatePersonalData = async (req, res, next) => {
   try {
     const userId = req.user._id;
     const { name } = req.body;
-    const updateData = { name };
+    const updateData = {};
+
+    if (name !== undefined) {
+      updateData.name = name;
+    }
 
     if (req.file) {
       const result = await saveAvatarToCloudinary(req.file.buffer, userId);
       updateData.avatarUrl = result.secure_url;
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      throw createHttpError(400, "No data to update");
     }
 
     const updatedUser = await UserModel.findByIdAndUpdate(
