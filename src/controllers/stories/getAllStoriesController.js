@@ -10,7 +10,7 @@ export const getAllStories = async (req, res, next) => {
       category,
     } = req.query;
 
-    const headerAuthor = req.get('autor');
+    const headerAuthor = req.get('author') || req.get('autor');
     const author = queryAuthor || headerAuthor;
 
     const skip = (Number(page) - 1) * Number(perPage);
