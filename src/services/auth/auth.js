@@ -11,7 +11,7 @@ import {
 export const login = async ({ email, password }) => {
   const user = await UserModel.findOne({
     email: email.toLowerCase(),
-  });
+  }).select('+password');
 
   if (!user) {
     throw createHttpError(401, 'Email or password is incorrect');
@@ -81,7 +81,7 @@ export const refreshSession = async (refreshToken) => {
     throw createHttpError(401, 'Invalid refresh token');
   }
 
-  const user = await UserModel.findById(payload.id);
+  const user = await UserModel.findById(payload.id).select('+refreshToken');
 
   if (!user || user.refreshToken !== refreshToken) {
     throw createHttpError(401, 'Invalid refresh token');
